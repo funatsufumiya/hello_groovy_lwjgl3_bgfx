@@ -48,11 +48,13 @@ public final class App {
 
         System.setProperty("org.lwjgl.util.Debug","true");
 
-        // System.out.println("preparing...");
+        System.out.println("setting glfw_async");
 
         if (Platform.get() == Platform.MACOSX) {
             Configuration.GLFW_LIBRARY_NAME.set("glfw_async");
         }
+
+        System.out.println("glfw init");
 
         GLFWErrorCallback.createThrow().set();
         if (!glfwInit()) {
@@ -64,6 +66,8 @@ public final class App {
         if (glfwGetPlatform() == GLFW_PLATFORM_COCOA) {
             glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_FALSE);
         }
+
+        System.out.println("glfw create window");
 
         long window = glfwCreateWindow(width, height, "25-C99", 0, 0);
         if (window == NULL) {
@@ -113,7 +117,7 @@ public final class App {
                         .nwh(GLFWNativeCocoa.glfwGetCocoaWindow(window));
 
                     // (b)
-                    
+
                     // long objc_msgSend = org.lwjgl.system.macosx.ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend");
 
                     // long layer = org.lwjgl.system.JNI.invokePPP(org.lwjgl.system.macosx.ObjCRuntime.objc_getClass("CAMetalLayer"), org.lwjgl.system.macosx.ObjCRuntime.sel_getUid("alloc"), objc_msgSend);
