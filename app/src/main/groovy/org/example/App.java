@@ -39,6 +39,9 @@ import static org.lwjgl.system.MemoryUtil.*;
  * <a href="https://github.com/bkaradzic/bgfx/tree/master/examples/25-c99">https://github.com/bkaradzic/bgfx/tree/master/examples/25-c99</a>.</p>
  */
 public final class App {
+    static {
+        System.setProperty("java.awt.headless", "true");
+    }
 
     private App() { }
 
@@ -56,7 +59,9 @@ public final class App {
 
         System.out.println("glfw init");
 
-        GLFWErrorCallback.createThrow().set();
+        // GLFWErrorCallback.createPrint().set();
+        GLFWErrorCallback.createPrint(System.err).set();
+        // GLFWErrorCallback.createThrow().set();
         if (!glfwInit()) {
             throw new RuntimeException("Error initializing GLFW");
         }
