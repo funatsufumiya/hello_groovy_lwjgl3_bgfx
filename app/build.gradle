@@ -15,8 +15,7 @@ plugins {
     id 'application'
 }
 
-// DO NOT USE THIS. This is not compatible with bgfx.
-// applicationDefaultJvmArgs = ["-XstartOnFirstThread"]
+applicationDefaultJvmArgs = ["-XstartOnFirstThread"]
 
 repositories {
     // Use Maven Central for resolving dependencies.
