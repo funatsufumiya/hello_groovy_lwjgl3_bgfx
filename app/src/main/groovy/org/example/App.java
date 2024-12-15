@@ -46,6 +46,8 @@ public final class App {
         int width  = 1024;
         int height = 480;
 
+        System.setProperty("org.lwjgl.util.Debug","true");
+
         // System.out.println("preparing...");
 
         if (Platform.get() == Platform.MACOSX) {
