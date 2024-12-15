@@ -46,7 +46,11 @@ public final class App {
         int width  = 1024;
         int height = 480;
 
-        // System.out.println("hello world");
+        // System.out.println("preparing...");
+
+        if (Platform.get() == Platform.MACOSX) {
+            Configuration.GLFW_LIBRARY_NAME.set("glfw_async");
+        }
 
         GLFWErrorCallback.createThrow().set();
         if (!glfwInit()) {
@@ -75,6 +79,8 @@ public final class App {
                     break;
             }
         });
+
+        // System.out.println("bgfx init ctor...");
 
         try (MemoryStack stack = stackPush()) {
             BGFXInit init = BGFXInit.malloc(stack);
@@ -108,6 +114,8 @@ public final class App {
                         .nwh(GLFWNativeWin32.glfwGetWin32Window(window));
                     break;
             }
+
+            System.out.println("bgfx init...");
 
             if (!bgfx_init(init)) {
                 throw new RuntimeException("Error initializing bgfx renderer");
