@@ -50,9 +50,9 @@ public final class App {
 
         // System.out.println("preparing...");
 
-        // if (Platform.get() == Platform.MACOSX) {
-        //     Configuration.GLFW_LIBRARY_NAME.set("glfw_async");
-        // }
+        if (Platform.get() == Platform.MACOSX) {
+            Configuration.GLFW_LIBRARY_NAME.set("glfw_async");
+        }
 
         GLFWErrorCallback.createThrow().set();
         if (!glfwInit()) {
@@ -108,19 +108,23 @@ public final class App {
                     }
                     break;
                 case MACOSX:
-                    // init.platformData()
-                    //     .nwh(GLFWNativeCocoa.glfwGetCocoaWindow(window));
-
-                    long objc_msgSend = org.lwjgl.system.macosx.ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend");
-
-                    long layer = org.lwjgl.system.JNI.invokePPP(org.lwjgl.system.macosx.ObjCRuntime.objc_getClass("CAMetalLayer"), org.lwjgl.system.macosx.ObjCRuntime.sel_getUid("alloc"), objc_msgSend);
-                    org.lwjgl.system.JNI.invokePPP(layer, org.lwjgl.system.macosx.ObjCRuntime.sel_getUid("init"), objc_msgSend);
-
-                    long contentView = org.lwjgl.system.JNI.invokePPP(GLFWNativeCocoa.glfwGetCocoaWindow(window), org.lwjgl.system.macosx.ObjCRuntime.sel_getUid("contentView"), objc_msgSend);
-                    org.lwjgl.system.JNI.invokePPPV(contentView, org.lwjgl.system.macosx.ObjCRuntime.sel_getUid("setLayer:"), layer, objc_msgSend);
-
+                    // (a)
                     init.platformData()
-                        .nwh(layer);
+                        .nwh(GLFWNativeCocoa.glfwGetCocoaWindow(window));
+
+                    // (b)
+                    
+                    // long objc_msgSend = org.lwjgl.system.macosx.ObjCRuntime.getLibrary().getFunctionAddress("objc_msgSend");
+
+                    // long layer = org.lwjgl.system.JNI.invokePPP(org.lwjgl.system.macosx.ObjCRuntime.objc_getClass("CAMetalLayer"), org.lwjgl.system.macosx.ObjCRuntime.sel_getUid("alloc"), objc_msgSend);
+                    // org.lwjgl.system.JNI.invokePPP(layer, org.lwjgl.system.macosx.ObjCRuntime.sel_getUid("init"), objc_msgSend);
+
+                    // long contentView = org.lwjgl.system.JNI.invokePPP(GLFWNativeCocoa.glfwGetCocoaWindow(window), org.lwjgl.system.macosx.ObjCRuntime.sel_getUid("contentView"), objc_msgSend);
+                    // org.lwjgl.system.JNI.invokePPPV(contentView, org.lwjgl.system.macosx.ObjCRuntime.sel_getUid("setLayer:"), layer, objc_msgSend);
+
+                    // init.platformData()
+                    //     .nwh(layer);
+
                     break;
                 case WINDOWS:
                     init.platformData()
